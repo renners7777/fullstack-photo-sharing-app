@@ -44,3 +44,8 @@ const UsersRouter = require('./routes/UsersRouter')
 app.use('/images', PhotosRouter)
 app.use('/comments', CommentsRouter)
 app.use('/users', UsersRouter)
+
+app.get("/photo", (request, response) => {
+    console.log("/photo");
+    response.render("photo");
+});
