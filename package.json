@@ -1,14 +1,14 @@
 {
   "name": "photo-sharing-app",
   "version": "1.0.0",
-  "description": "",
+  "description": "Fullstack app to share photos",
   "main": "index.js",
   "scripts": {
   "dev": "nodemon server.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/renners7777/photo-sharing-app.git"
+    "url": "https://github.com/renners7777/photo-sharing-app.git"
   },
   "author": "",
   "license": "ISC",
