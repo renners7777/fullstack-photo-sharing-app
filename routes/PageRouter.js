@@ -2,12 +2,24 @@ const express = require("express");
 const PageRouter = express.Router();
 const db = require("../models");
 
-PageRouter.get("/", (req, res) => {
-    res.render("index");
+PageRouter.get("/", (request, response) => {
+    console.log(request.session.userId)
+    if (request.session.userId) {
+        response.render("index");
+    }
+    else {
+        response.redirect('/login')
+    }
 });
+
 PageRouter.get("/photo", (request, response) => {
-    console.log("/photo");
-    response.render("photo");
+    console.log(request.session.userId)
+    if (request.session.userId) {
+        response.render("photo");
+    }
+    else {
+        response.redirect('/login')
+    }
 });
 PageRouter.get("/login", (request, response) => {
     console.log("/LOGGING IN!");
