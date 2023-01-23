@@ -16,11 +16,13 @@ UsersRouter.route("/login").post(async (request, response) => {
     db.user
         .findOne({ where: { username: username } })
         .then(async (user) => {
+            console.log("User.password=", user.password)
+            console.log("password = ", password)
             if (user) {
                 bcrypt.compare(password, user.password, (error, same) => {
                     if (same) {
-                        console.log("logged in, user id =", user.id)
-                        request.session.userID = user.id;
+                        console.log(user.id)
+                        request.session.userId = user.id;
                         response.redirect("/");
                     } else {
                         response.redirect("/login");
@@ -29,26 +31,29 @@ UsersRouter.route("/login").post(async (request, response) => {
             }
         })
         .catch((error) => {
-            console.log(error);
+            console.log("this fired", error);
             response.send(error);
         });
 });
 
-
-UsersRouter.route('/signUp')
-    .post(async (request, response) => {
-        // email, password, username
-        const email = request.body.email
-        const password = request.body.password
-        const encryptedPassword = await bcrypt.hash(password, saltRounds);
-        const username = request.body.username
-
-        db.user.create({ email: email[0], password: encryptedPassword, username: username }).then(user => {
-            //   response.send(user)
-            response.redirect('/login');
-        }).catch(err => {
-            err
+UsersRouter.route("/signUp").post(async (request, response) => {
+    console.log(request.body)
+    const password = request.body.password;
+    const encryptedPassword = await bcrypt.hash(password, saltRounds);
+    // email, password, username
+    const email = request.body.email;
+    const username = request.body.username;
+    //   console.log(encryptedPassword)
+    db.user
+        .create({ email: email[0], password: encryptedPassword, username: username })
+        //response.send(user) // changed in chapter 7.2
+        .then((user) => {
+            //response.send(user) // changed in chapter 7.2
+            response.redirect("/login");
         })
-    })
+        .catch((err) => {
+            err;
+        });
+});
 
 module.exports = UsersRouter;

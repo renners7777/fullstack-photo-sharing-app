@@ -7,6 +7,11 @@ const sqlPort = 3307;
 const expressSession = require("express-session");
 
 app.use(expressSession({secret: 'Chris Loves Kinsta'}))
+global.loggedIn = null;
+app.use("*", (request, response, next) => {
+    loggedIn = request.session.userId;
+    next();
+});
 
 app.use(express.static("public"));
 app.listen(port, () => {
