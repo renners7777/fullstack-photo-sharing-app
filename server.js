@@ -15,7 +15,7 @@ app.set("view engine", "ejs");
 
 //db
 db.sequelize
-    .sync({})
+    .sync({ force: true })
     .then(() => {
         app.listen(sqlPort, () => {
             console.log(
@@ -30,15 +30,10 @@ db.sequelize
 const PhotosRouter = require('./routes/PhotosRouter')
 const CommentsRouter = require('./routes/CommentsRouter')
 const UsersRouter = require('./routes/UsersRouter')
+const PageRouter = require('./routes/PageRouter')
+
 app.use("/images", PhotosRouter);
 app.use("/comments", CommentsRouter);
 app.use("/users", UsersRouter);
+app.use("/", PageRouter);
 
-// use res.render to load up an ejs template
-app.get("/", (req, res) => {
-    res.render("index");
-});
-app.get("/photo", (request, response) => {
-    console.log("/photo");
-    response.render("photo");
-});

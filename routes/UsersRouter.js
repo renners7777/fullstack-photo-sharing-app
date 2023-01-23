@@ -10,7 +10,8 @@ UsersRouter.route('/login')
         const password = request.body.password
         const username = request.body.username
         db.user.findOne({ where: { username: username, password: password } }).then(user => {
-            response.send(user)
+            //response.send(user)
+            response.redirect('/')
         }).catch(err => {
             response.send('You don\'t have an account. Try signing up!')
         })
@@ -24,7 +25,8 @@ UsersRouter.route('/signUp')
         const username = request.body.username
 
         db.user.create({ email: email, password: password, username: username }).then(user => {
-            response.send(user)
+            //response.send(user)
+            response.redirect('./login')
         }).catch(err => {
             err
         })
