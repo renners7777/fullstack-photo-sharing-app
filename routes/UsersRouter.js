@@ -10,24 +10,26 @@ const saltRounds = 10;
 
 UsersRouter.route("/login").post(async (request, response) => {
     // username and password are required
-    console.log(request.body)
     const username = request.body.username;
     const password = request.body.password;
     db.user
         .findOne({ where: { username: username } })
         .then(async (user) => {
-            console.log("User.password=", user.password)
-            console.log("password = ", password)
             if (user) {
                 bcrypt.compare(password, user.password, (error, same) => {
                     if (same) {
-                        console.log(user.id)
                         request.session.userId = user.id;
                         response.redirect("/");
                     } else {
+                        alert("Wrong Password")
                         response.redirect("/login");
                     }
                 });
+            }
+            else {
+                response.status(401)
+                console.log("401 error")
+                response.redirect("/badlogin")
             }
         })
         .catch((error) => {
@@ -37,7 +39,6 @@ UsersRouter.route("/login").post(async (request, response) => {
 });
 
 UsersRouter.route("/signUp").post(async (request, response) => {
-    console.log(request.body)
     const password = request.body.password;
     const encryptedPassword = await bcrypt.hash(password, saltRounds);
     // email, password, username
