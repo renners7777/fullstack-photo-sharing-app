@@ -28,17 +28,19 @@ const upload = multer({
     storage: fileStorageEngine
 });
 
-PhotosRouter.route("/").get((request, response) => {
-    db.photo
-        .findAll()
-        .then((photos) => {
-            console.log("GET IMAGES");
-            response.redirect("/");
-        })
-        .catch((error) => {
-            response.send(error);
-        });
-});
+PhotosRouter.route("/")
+    .get((request, response) => {
+        db.photo
+            .findAll()
+            .then((photos) => {
+                console.log("GET IMAGES");
+                response.send(photos);
+                // response.redirect('/');
+            })
+            .catch((error) => {
+                response.send(error);
+            });
+    })
 
 PhotosRouter.route("/")
     .post(upload.single("photo"), (request, response) => {

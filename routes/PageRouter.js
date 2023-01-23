@@ -3,13 +3,22 @@ const PageRouter = express.Router();
 const db = require("../models");
 
 PageRouter.get("/", (request, response) => {
-    console.log(request.session.userId);
     if (request.session.userId) {
-        response.render("index");
+        db.photo
+            .findAll()
+            .then((photos) => {
+                console.log("GET IMAGES");
+                response.render("index", { data: photos });
+            })
+            .catch((error) => {
+                response.send(error);
+            });
+
     } else {
         response.redirect("/login");
     }
 });
+
 PageRouter.get("/photo", (request, response) => {
     console.log(request.session.userId);
     if (request.session.userId) {
