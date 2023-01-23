@@ -15,7 +15,7 @@ app.set("view engine", "ejs");
 
 //db
 db.sequelize
-    .sync({ force: true })
+    .sync({})
     .then(() => {
         app.listen(sqlPort, () => {
             console.log(
@@ -26,14 +26,4 @@ db.sequelize
     .catch((error) => {
         console.error("Unable to connect to the database:", error);
     });
-
-const PhotosRouter = require('./routes/PhotosRouter')
-const CommentsRouter = require('./routes/CommentsRouter')
-const UsersRouter = require('./routes/UsersRouter')
-const PageRouter = require('./routes/PageRouter')
-
-app.use("/images", PhotosRouter);
-app.use("/comments", CommentsRouter);
-app.use("/users", UsersRouter);
-app.use("/", PageRouter);
 
