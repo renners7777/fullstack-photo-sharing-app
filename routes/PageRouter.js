@@ -24,6 +24,19 @@ PageRouter.get("/", (request, response) => {
             }
         );
 
+        db.photo
+            .findAll()
+            .then((photos) => {
+                console.log("GET IMAGES");
+                response.render("index", { data: photos });
+            })
+            .catch((error) => {
+                response.send(error);
+            });
+    } else {
+        response.redirect("/login");
+    }
+});
 PageRouter.get("/photo", (request, response) => {
     console.log(request.session.userId);
     if (request.session.userId) {
@@ -36,12 +49,10 @@ PageRouter.get("/login", (request, response) => {
     console.log("/LOGGING IN!");
     response.render("login", { data: "" });
 });
-
 PageRouter.get("/badlogin", (request, response) => {
     console.log("/LOGGING IN!");
     response.render("login", { data: "Bad Login Credentials" });
 });
-
 PageRouter.get("/signUp", (request, response) => {
     console.log("/signUp");
     response.render("signUp");
@@ -52,9 +63,9 @@ PageRouter.get("/logout", (request, response) => {
         response.redirect("/login");
     });
 });
-
 PageRouter.get("/*", (request, response) => {
     console.log("404");
     response.render("404");
 });
+
 module.exports = PageRouter;
