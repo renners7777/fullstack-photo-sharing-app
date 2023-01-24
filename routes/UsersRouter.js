@@ -19,21 +19,22 @@ UsersRouter.route("/login").post(async (request, response) => {
                 bcrypt.compare(password, user.password, (error, same) => {
                     if (same) {
                         request.session.userId = user.id;
+                        console.log(request.session)
+                        console.log('Logged in')
                         response.redirect("/");
                     } else {
-                        alert("Wrong Password")
-                        response.redirect("/login");
+                        response.status(401)
+                        console.log("401 error")
+                        response.redirect("/badlogin")
                     }
                 });
             }
             else {
-                response.status(401)
-                console.log("401 error")
-                response.redirect("/badlogin")
+                response.send('No such user!')
             }
         })
         .catch((error) => {
-            console.log("this fired", error);
+            console.log(error);
             response.send(error);
         });
 });

@@ -3,6 +3,7 @@ const app = new express();
 const port = 8080;
 const db = require("./models");
 const bodyParser = require("body-parser");
+const logger = require("morgan");
 const sqlPort = 3307;
 const expressSession = require("express-session");
 
@@ -18,6 +19,7 @@ app.listen(port, () => {
     console.log(`Serving photo app on http://localhost:${port}`);
 });
 app.use(bodyParser.json());
+app.use(logger("dev"));
 // set the view engine to ejs
 app.set("view engine", "ejs");
 

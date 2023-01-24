@@ -29,8 +29,14 @@ PageRouter.get("/photo", (request, response) => {
 });
 PageRouter.get("/login", (request, response) => {
     console.log("/LOGGING IN!");
-    response.render("login");
+    response.render("login", { data: "" });
 });
+
+PageRouter.get("/badlogin", (request, response) => {
+    console.log("/LOGGING IN!");
+    response.render("login", { data: "Bad Login Credentials" });
+});
+
 PageRouter.get("/signUp", (request, response) => {
     console.log("/signUp");
     response.render("signUp");
