@@ -1,3 +1,4 @@
 node_modules
 config.json
 npm-publish-github-packages.yml
+.vercel
