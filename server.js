@@ -15,8 +15,8 @@ app.use("*", (request, response, next) => {
 });
 
 app.use(express.static("public"));
-app.listen(port, () => {
-    console.log(`Serving photo app on http://localhost:${port}`);
+app.listen(process.env.PORT || port, () => {
+    console.log(`Serving photo app on port ${port}`);
 });
 app.use(bodyParser.json());
 app.use(logger("dev"));
@@ -30,7 +30,7 @@ db.sequelize
     .then(() => {
         app.listen(sqlPort, () => {
             console.log(
-                `MariaDB Connection has been established successfully to http://localhost:${sqlPort}.`
+                `MariaDB Connection has been established successfully to sqlPort ${sqlPort}.`
             );
         });
     })
